@@ -1,0 +1,16 @@
+{
+    "name": "0.0.0/composer-include-files",
+
+    "autoload": {
+        "psr-4": {
+            "Core\\":"App/Core/",
+            "App\\":"App/",
+            "Controllers\\":"App/Controllers",
+            "Models\\":"App/Models"
+        }
+    },
+    "require": {
+        "twig/twig":"3.0.3",
+        "ext-pdo": "*"
+    }
+}

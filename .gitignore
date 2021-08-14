@@ -1,0 +1,6 @@
+vendor
+.idea
+.vscode
+*.iml
+node_modules
+composer.lock
