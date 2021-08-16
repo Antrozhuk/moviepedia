@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MoviePedia</title>
+    <link rel="stylesheet" href={{ asset('css/bootstrap.min.css') }}>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    <script src={{ asset('js/script.js') }}></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="container p-5">
+    <h3 class="m-2 ml-5">Поиск:</h3>
+    <div id="searchMovieByName" class="d-flex bd-highlight">
+        <div class="input-group m-3">
+            <input type="text" class="form-control" name="Title" placeholder="Найти фильм по названию">
+        </div>
+
+        <div class="input-group m-3">
+            <input type="text" class="form-control" name="Stars" placeholder="Найти фильм по имени актера">
+        </div>
+
+        <div class="input-group m-3">
+            <a href="/asc"><button type="button" class="btn form-control btn-secondary">Показать в алфавитном порядке</button></a>
+        </div>
+
+        <form enctype="multipart/form-data" action="uploadfile" method="POST" class="input-group m-3">
+            <div class="row">
+                <!-- Поле MAX_FILE_SIZE должно быть указано до поля загрузки файла -->
+                <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                <!-- Название элемента input определяет имя в массиве $_FILES -->
+                <input name="fileTxt" type="file" value="Загрузить из текстового документа"/>
+                <input type="submit" value="Отправить файл" />
+            </div>
+        </form>
+    </div>
+    <h3 class="m-2 ml-5">Добавить фильм:</h3>
+    <div id="addBlock" class="d-flex bd-highlight">
+        <div class="input-group m-3">
+            <input type="text" class="form-control" name="Title" placeholder="Название">
+        </div>
+
+        <div class="input-group m-3">
+            <input type="number" class="form-control" min="1900" max="2021" name="Release Year" placeholder="Год">
+        </div>
+
+        <div class="input-group m-3">
+            <input type="text" class="form-control" name="Format" placeholder="Формат">
+        </div>
+
+        <div class="input-group m-3">
+            <input type="text" class="form-control" name="Stars" placeholder="Актеры">
+        </div>
+
+        <div class="input-group m-3">
+            <button type="button" class="btn form-control btn-secondary" id="addNewMovie">Добавить</button>
+        </div>
+    </div>
+    {% if data|length > 0 %}
+        <div class="conteiner m-5">
+            <h1 class="text-center mb-3 ">Список фильмов {% if asc %}отсортированных по названию в алфавитном порядке{% endif %}</h1>
+            <ul class="list-group" id="movies">
+                {% for movie in data %}
+                    <div  data-id="{{ movie.id }}">
+                        <li class="list-group-item d-flex justify-content-between bg-secondary">
+                            <div class="input-group align-content-center searchTitle">
+                                {{ movie.title }}
+                            </div>
+                            <div class="input-group mr-5">
+                                <button type="button" class="btn form-control btn-success showinfo">Дополнительно</button>
+                            </div>
+                            <div class="input-group ml-5 mr-5">
+                                <button type="button" class="btn form-control btn-danger drop">Удалить</button>
+                            </div>
+                        </li>
+                        <div class="info" hidden><li class="list-group-item info" >
+                                <div class="d-flex">
+                                    <div class="input-group">
+                                        Год: {{ movie.release_year }}
+                                    </div>
+                                    <div class="input-group">
+                                        Формат: {{ movie.format }}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item searchStars">
+                                Актеры: {{ movie.stars }}
+                            </li></div>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -23,14 +23,7 @@ class Controller
             $asset = new TwigFunction('asset', function ($path) {
                 return '../public/' . $path;
             });
-            $title = new TwigFunction('title', function ($title = null) {
-
-                    return $title ;
-
-            });
-
             $twig->addFunction($asset);
-            $twig->addFunction($title);
 
         }
         try {

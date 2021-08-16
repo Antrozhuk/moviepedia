@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use App\config\Config;
 use App\routs\Routs;
 
 class Router
