@@ -35,19 +35,23 @@
     <h3 class="m-2 ml-5">Добавить фильм:</h3>
     <div id="addBlock" class="d-flex bd-highlight">
         <div class="input-group m-3">
-            <input type="text" class="form-control" name="Title" placeholder="Название">
+            <input type="text" class="form-control filter" name="Title" placeholder="Название">
         </div>
 
         <div class="input-group m-3">
-            <input type="number" class="form-control" min="1900" max="2021" name="Release Year" placeholder="Год">
+            <input type="number" class="form-control filter" min="1850" max="2021" name="Release Year" placeholder="Год">
         </div>
 
         <div class="input-group m-3">
-            <input type="text" class="form-control" name="Format" placeholder="Формат">
+            <select class="form-control filter" name="Format">
+                {% for value in format %}
+                <option value="{{ value }}">{{ value }}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <div class="input-group m-3">
-            <input type="text" class="form-control" name="Stars" placeholder="Актеры">
+            <input type="text" class="form-control filter" name="Stars" placeholder="Актеры">
         </div>
 
         <div class="input-group m-3">
@@ -88,8 +92,17 @@
                 {% endfor %}
             </ul>
         </div>
+
+
     {% else %}
         <h1 class="text-center mb-3 ">Фильмы не найдены</h1>
     {% endif %}
+    <div class="d-block mt-3">
+        <center><div class="d-inline-flex"  style="margin: auto">
+                {% for i in 1..pages %}
+                    <a class="page-link btn btn-secondary" href="?page={{ i }}" class="p-3">{{ i }}</a>
+                {% endfor %}
+            </div></center>
+    </div>
 </body>
 </html>

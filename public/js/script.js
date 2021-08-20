@@ -34,7 +34,7 @@ $(document).ready(function(){
         let formGroup = $('#addBlock');
         let formData = {};
         let data = true;
-        formGroup.find('input').each(function(){
+        formGroup.find('.filter').each(function(){
             if($(this).val() != ""){
                 formData[$(this).prop('name')] = $(this).val();
             }else{
@@ -48,34 +48,33 @@ $(document).ready(function(){
                 dataType: 'JSON',
                 data: formData,
                 success: function(data){
-                    if(data.res){console.log(formData);
+                    if(data.res){
                         let prependStr =
                             '<div data-id="'+data.id+'">' +
                             '<li class="list-group-item d-flex justify-content-between bg-secondary" >' +
-                                '<div class="input-group align-content-center">' + formData["Title"] + '</div>' +
+                                '<div class="input-group align-content-center">' + data.data["Title"] + '</div>' +
                                 '<div class="input-group mr-5 showinfo"><button type="button" class="btn form-control btn-success">Дополнительно</button></div>' +
                                 '<div class="input-group ml-5 mr-5 drop"><button type="button" class="btn form-control btn-danger">Удалить</button></div>' +
                             '</li>' +
                             '<div class="info" hidden>' +
                                 '<li class="list-group-item"">' +
                                     '<div class="d-flex">' +
-                                        '<div class="input-group">Год: ' + formData["Release Year"] + '</div>' +
-                                        '<div class="input-group">Формат: ' + formData["Format"] + '</div>' +
+                                        '<div class="input-group">Год: ' + data.data["Release Year"] + '</div>' +
+                                        '<div class="input-group">Формат: ' + data.data["Format"] + '</div>' +
                                     '</div>' +
                                 '</li>' +
-                                '<li class="list-group-item">Актеры: '+ formData["Stars"] + '</li>' +
+                                '<li class="list-group-item">Актеры: '+ data.data["Stars"] + '</li>' +
                             '</div></div>';
                         $('#movies').prepend(prependStr);
-                        $('#movies').prepend('<center><h3>Фильм успешно удалён</h3></center>')
-                        setTimeout(function (){
-                            $('#movies center').remove();
-                        }, 5000);
-                    }else{
-                        alert('Заполните все поля');
                     }
+                    alert(data.message);
                 }
             })
         }
+    });
+
+    $('#addBlock input[name="Stars"]').on('input', function() {
+        $(this).val($(this).val().replace(/[^а-яА-Яa-zA-Z,-]/g, ''))
     });
 
     $('body').on('click', '.drop', function(){

@@ -30,11 +30,19 @@ class Upload
                 }
             }
             array_chunk($to_insert,4);
-            $inserrtCount = 0;
+
+            $result = array(
+                'insertedCount' => 0,
+                'notInsertedCount' => 0,
+            );
             foreach ($to_insert as $row){
-                $inserrtCount += (new MainModel())->addNewMovie($row) ? 1 : 0;
+                $res = (new MainModel())->addNewMovie($row)['res'];
+                if($res)
+                    $result['insertedCount']++;
+                else
+                    $result['notInsertedCount']++;
             }
-            return $inserrtCount;
+            return $result;
         }
     }
 }
